@@ -38,7 +38,7 @@ jobs:
           # Run lz4
           ./lzbench -ezstd,1,st -ezstd,1,mt -ezstd,19,st -ezstd,19,mt \
                     -elz4,1,st -elz4,1,mt -elz4,9,st -elz4,9,mt \
-                    -egzip,9 -i10,20 ../testfile | tee ../results/lzbench_results.txt
+                    -i10,20 ../testfile | tee ../results/lzbench_results.txt
 
       - name: Upload Results
         uses: actions/upload-artifact@v4
