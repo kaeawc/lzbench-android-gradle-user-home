@@ -36,8 +36,12 @@ jobs:
           echo "Running benchmarks on compression tools..."
 
           # Run lz4
-          ./lzbench -ezstd,1,st -ezstd,1,mt -ezstd,19,st -ezstd,19,mt \
-                    -elz4,1,st -elz4,1,mt -elz4,9,st -elz4,9,mt \
+          ./lzbench -ezstd_fast,1,st -ezstd_fast,1,mt \
+                    -ezstd_fast,5 -ezstd_fast,5,mt \
+                    -ezstd_fast,19,st -ezstd_fast,19,mt \
+                    -elz4fast,1,st -elz4fast,1,mt \
+                    -elz4fast,9,st -elz4fast,9,mt \
+                    -elz4fast,17,st -elz4fast,17,mt \
                     -i10,20 ../testfile | tee ../results/lzbench_results.txt
 
       - name: Upload Results
