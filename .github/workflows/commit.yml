@@ -19,12 +19,21 @@ jobs:
           sudo apt install -y build-essential git cmake tar gzip zstd lz4
           which gzip || echo "Gzip not found!"
 
-      - name: Clone and Build lzbench
-        run: |
-          git clone https://github.com/inikep/lzbench.git
-          cd lzbench
-          make -j$(nproc)
+      - name: Cache lzbench Build
+        id: cache-lzbench
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/lzbench
+          key: lzbench-${{ runner.os }}-${{ hashFiles('lzbench/.git/refs/heads/master') }}
 
+      - name: Build lzbench (if not cached)
+        if: steps.cache-lzbench.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p ~/.cache/lzbench
+          git clone https://github.com/inikep/lzbench.git ~/.cache/lzbench
+          cd ~/.cache/lzbench
+          make -j$(nproc)
+          
       - name: Run Benchmarks
         run: |
           mkdir -p results
