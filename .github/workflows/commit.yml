@@ -35,7 +35,7 @@ jobs:
           echo "Running benchmarks on compression tools..."
 
           # Run lz4
-          ./lzbench -ezstd,22 -elz4,9 -egzip,9 -epigz,9 -i10,20 ../testfile | tee ../results/lzbench_results.txt
+          ./lzbench -ezstd,22 -elz4,9 -egzip,9 -i10,20 ../testfile | tee ../results/lzbench_results.txt
 
       - name: Upload Results
         uses: actions/upload-artifact@v4
