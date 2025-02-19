@@ -43,22 +43,29 @@ jobs:
 
           echo "Running benchmarks on compression tools..."
 
-          # Run lz4
-          ~/.cache/lzbench/lzbench -ezstd_fast,1,st -ezstd_fast,1,mt \
-                    -ezstd_fast,5 -ezstd_fast,5,mt \
-                    -ezstd_fast,19,st -ezstd_fast,19,mt \
-                    -i10,20 testfile | tee results/lzbench_zstd_results.txt
+          # Run lz4 ST
+          ~/.cache/lzbench/lzbench \
+            -ezstd_fast,1,st \
+            -i10,20 testfile | tee results/lzbench_zstd_st_results.txt
 
-          # Run lz4
-          ~/.cache/lzbench/lzbench -elz4fast,1,st -elz4fast,1,mt \
-                    -elz4fast,9,st -elz4fast,9,mt \
-                    -elz4fast,17,st -elz4fast,17,mt \
-                    -i10,20 testfile | tee results/lzbench_lz4_results.txt
+          # Run lz4 MT
+          ~/.cache/lzbench/lzbench \
+            -ezstd_fast,1,mt \
+            -i10,20 testfile | tee results/lzbench_zstd_mt_results.txt
+
+          # Run lz4 ST
+          ~/.cache/lzbench/lzbench \
+            -elz4fast,1,st \
+            -i10,20 testfile | tee results/lzbench_lz4_st_results.txt
+
+          # Run lz4 MT
+          ~/.cache/lzbench/lzbench \
+            -elz4fast,1,mt \
+            -i10,20 testfile | tee results/lzbench_lz4_mt_results.txt
 
       - name: Upload Results
         uses: actions/upload-artifact@v4
         with:
           name: lzbench-results
           path: |
-            results/lzbench_zstd_results.txt
-            results/lzbench_lz4_results.txt
+            results/lzbench*
