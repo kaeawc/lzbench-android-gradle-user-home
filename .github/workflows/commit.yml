@@ -37,7 +37,7 @@ jobs:
       - name: Run Benchmarks
         run: |
           mkdir -p results
-          cd lzbench
+          cd ~/.cache/lzbench
           
           # Create a test file (100MB of random data)
           dd if=/dev/urandom of=../testfile bs=1M count=100
