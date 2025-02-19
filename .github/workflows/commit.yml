@@ -24,7 +24,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/lzbench
-          key: lzbench-${{ runner.os }}-${{ hashFiles('lzbench/.git/refs/heads/master') }}
+          key: lzbench-${{ runner.os }}-${{ hashFiles('~/.cache/lzbench/.git/refs/heads/master') }}
 
       - name: Build lzbench (if not cached)
         if: steps.cache-lzbench.outputs.cache-hit != 'true'
@@ -37,7 +37,6 @@ jobs:
       - name: Run Benchmarks
         run: |
           mkdir -p results
-          cd ~/.cache/lzbench
           
           # Create a test file (100MB of random data)
           dd if=/dev/urandom of=../testfile bs=1M count=100
@@ -45,16 +44,16 @@ jobs:
           echo "Running benchmarks on compression tools..."
 
           # Run lz4
-          ./lzbench -ezstd_fast,1,st -ezstd_fast,1,mt \
+          ~/.cache/lzbench/lzbench -ezstd_fast,1,st -ezstd_fast,1,mt \
                     -ezstd_fast,5 -ezstd_fast,5,mt \
                     -ezstd_fast,19,st -ezstd_fast,19,mt \
-                    -i10,20 ../testfile | tee ../results/lzbench_zstd_results.txt
+                    -i10,20 testfile | tee results/lzbench_zstd_results.txt
 
           # Run lz4
-          ./lzbench -elz4fast,1,st -elz4fast,1,mt \
+          ~/.cache/lzbench/lzbench -elz4fast,1,st -elz4fast,1,mt \
                     -elz4fast,9,st -elz4fast,9,mt \
                     -elz4fast,17,st -elz4fast,17,mt \
-                    -i10,20 ../testfile | tee ../results/lzbench_lz4_results.txt
+                    -i10,20 testfile | tee results/lzbench_lz4_results.txt
 
       - name: Upload Results
         uses: actions/upload-artifact@v4
