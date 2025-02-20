@@ -39,7 +39,7 @@ jobs:
           mkdir -p results
           
           # Create a test file (100MB of random data)
-          dd if=/dev/urandom of=testfile bs=1M count=100
+          dd if=/dev/urandom of=testfile bs=1M count=1000
 
           echo "Running benchmarks on compression tools..."
 
