@@ -44,10 +44,10 @@ jobs:
           echo "Running benchmarks on compression tools..."
 
           # Run lz4 ST
-          ~/.cache/lzbench/lzbench \\
-            -ezstd_fast,1 \\
-            -elz4fast,1 \\
-            -egzip,1 \\
+          ~/.cache/lzbench/lzbench \
+            -ezstd_fast,1 \
+            -elz4fast,1 \
+            -egzip,1 \
             -i10,20 testfile | tee results/lzbench_results.txt
 
       - name: Upload Results
